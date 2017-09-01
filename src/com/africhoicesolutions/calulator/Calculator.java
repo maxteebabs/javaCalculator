@@ -1,9 +1,12 @@
 package com.africhoicesolutions.calulator;
 
 import javax.swing.*;
+import javax.swing.text.NumberFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 public class Calculator implements ActionListener {
     JButton one, two, three, four, five, six, seven, eight, nine, zero, clear, back;
@@ -13,9 +16,7 @@ public class Calculator implements ActionListener {
     float display_text = 0;
     JTextField display;
     Box box;
-    Double firstNum;
-    Double secondNum;
-    Double answer;
+    Double firstNum, secondNum, answer;
     String operation;
     String holder;
 
@@ -38,7 +39,7 @@ public class Calculator implements ActionListener {
         JFrame background = new JFrame();
         background.setTitle("Calculator");
         background.setVisible(true);
-        background.setSize(250, 350);
+        background.setSize(350, 350);
 
 
         //set the display
@@ -216,8 +217,13 @@ public class Calculator implements ActionListener {
                         answer = firstNum % secondNum;
                         break;
                 }
-                String txt = String.valueOf(answer);
+
+                NumberFormat num = NumberFormat.getNumberInstance(Locale.US);
+                num.setMaximumFractionDigits(2);
+                num.setMaximumIntegerDigits(10);
+                String txt = String.valueOf(num.format(answer));
                 display.setText(txt);
+                firstNum = secondNum = 0d;
                 break;
             case "1":System.out.println(display.getText());
                 txt =  display.getText() + e.getActionCommand();
